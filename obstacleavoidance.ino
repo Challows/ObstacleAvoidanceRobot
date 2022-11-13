@@ -1,23 +1,13 @@
 
 
-#include <HCSR04.h>
-#include <AFMotor.h>
+#include <HCSR04.h> //Library for the Ultrasonic sensor
+#include <AFMotor.h> //Motor library
+#include <Servo.h>  //Servo motor library
 
 //Code
-/* Obstacle Avoiding Robot Using Ultrasonic Sensor and Ard*/
-#include <Servo.h>  //Servo motor library
-//#include <HCSR04.h> //Ulrasonic sensor funtion library
 
 int trigPin = 52;      // trig pin of HC-SR04
 int echoPin = 53;     // Echo pin of HC-SR04
-
-
-// delay(500);
-//    motor1.run(RELEASE);
-//    motor2.run(RELEASE);
-
-
-
 
 long duration;
 #define maximum_distance 200
@@ -26,9 +16,8 @@ int distance1;
 int pos = 0;
 int distanceRight;
 int distanceLeft;
-//int lookRight;
-//int lookLeft;
 Servo myservo;
+
 HCSR04 sonar(trigPin, echoPin, maximum_distance); //sensor function
 
 AF_DCMotor motor1(3, MOTOR34_64KHZ);
@@ -37,7 +26,7 @@ AF_DCMotor motor2(4, MOTOR34_64KHZ);
 
 void setup() {
   
-//  delay(random(500,2000));   // delay for random time
+  delay(random(500,2000));   // delay for random time
   Serial.begin(9600);
   motor1.setSpeed(255);
   motor2.setSpeed(255);
@@ -49,18 +38,14 @@ void setup() {
 
   myservo.attach(10); //servo pin
   myservo.write(90);
-//  delay(10000);
-//  distance = readPing();
-  delay(100);
-//  motor1.run(FORWARD);//move forward
-//  motor2.run(FORWARD); 
-//  digitalWrite(trigPin, LOW);
-//  delayMicroseconds(2);   
-//  digitalWrite(trigPin, HIGH);     // send waves for 10 us
-//  delayMicroseconds(10);
-//  duration = pulseIn(echoPin, HIGH); // receive reflected waves
-//  distance = duration / 58.2;  
-// 
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);   
+  digitalWrite(trigPin, HIGH);     // send waves for 10 us
+  delayMicroseconds(10);
+  duration = pulseIn(echoPin, HIGH); // receive reflected waves
+  distance = duration / 58.2;  
+
 //   
 }
 
@@ -81,7 +66,7 @@ void loop() {
   if (distance > 18)            
   {
   Serial.println("moving forward");
-  motor1.run(FORWARD);//move forward
+  motor1.run(FORWARD); //move forward
   motor2.run(FORWARD);                                                       
   }
 
@@ -91,12 +76,7 @@ void loop() {
     motor1.run(RELEASE);
     motor2.run(RELEASE);
     delay(500);
-//    motor1.run(BACKWARD);
-//    motor2.run(BACKWARD);
-//    delay(500);
-//    motor1.run(RELEASE);
-//    motor2.run(RELEASE);
-//    delay(100);  
+
     distanceRight = lookRight();
     Serial.println(distanceRight);
    
@@ -111,22 +91,14 @@ void loop() {
       delay(200);
       
       moveForward();
-//      motor1.run(RELEASE);
-//      motor2.run(RELEASE);
     }
     else{
       
       Serial.println("turning left");
       turnRight();
       delay(200);
-//      moveForward();
-//      moveStop();
     }
   }
-  
-   
-  
- 
 
 }
 
@@ -138,9 +110,6 @@ void turnRight(){
 
     motor1.run(RELEASE);
     motor2.run(RELEASE);
-    
-  
-//    motor1.run(RELEASE);
 
 }
 
@@ -175,13 +144,6 @@ int readPing(){
   duration = pulseIn(echoPin, HIGH); // receive reflected waves
   Serial.println("readping works");
   distance1 = duration / 58.2;
-////    delay(70);
-//    int cm;
-////    cm = sonar.();
-//    cm = duration / 58.2;
-//    if (cm==0){
-//      cm=250;
-//    }
   return distance1;
 }
 int lookRight(){
