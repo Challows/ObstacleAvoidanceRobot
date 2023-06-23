@@ -6,8 +6,8 @@
 
 //Code
 
-int trigPin = 52;      // trig pin of HC-SR04
-int echoPin = 53;     // Echo pin of HC-SR04
+int trigPin = 52;      // trig pin of HC-SR04 (for signal transmission)
+int echoPin = 53;     // Echo pin of HC-SR04 (for signal reception)
 
 long duration;
 #define maximum_distance 200
